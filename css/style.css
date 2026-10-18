@@ -1,0 +1,336 @@
+/* ============================
+   RESET & BASE
+============================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #9a4e02, #6ed2fd);
+    padding: 20px;
+}
+
+/* body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #6a5af9, #d66efd);
+    padding: 20px;
+} */
+
+#root {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================
+   CONTAINER PRINCIPAL
+============================= */
+.container {
+    position: relative;
+    width: 650px;
+    max-width: 100%;
+    min-height: 350px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* ============================
+   FORMULAIRES (LOGIN / REGISTER)
+============================= */
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.6s ease-in-out;
+}
+
+.form-container form {
+    width: 100%;
+    max-width: 320px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+/* Login = à gauche, visible par défaut */
+.login-container {
+    left: 0;
+    z-index: 2;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Register = à gauche aussi, mais caché au départ (crossfade + léger slide) */
+.register-container {
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    transform: translateX(30px);
+    pointer-events: none;
+}
+
+/* ============================
+   CHAMPS DE SAISIE
+============================= */
+.input-box {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 13px 45px 13px 16px;
+    background: #f2f2f5;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-box input:focus {
+    border-color: #1a1a1a;
+    background: #fff;
+}
+
+.input-box .icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #888;
+}
+
+.forgot-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #666;
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* ============================
+   BOUTONS
+============================= */
+.btn {
+    padding: 13px 0;
+    border: none;
+    border-radius: 30px;
+    background: #160243;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    background: #333;
+}
+
+.btn.ghost {
+    background: transparent;
+    border: 2px solid #fff;
+}
+
+.btn.ghost:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Lien "switch" visible seulement en version mobile (voir media query) */
+.switch-text {
+    margin-top: 18px;
+    font-size: 13px;
+    color: #00e67a;
+    text-align: center;
+    display: none;
+}
+
+.switch-text span {
+    color: #1a1a1a;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* ============================
+   PANNEAU DIAGONAL (OVERLAY)
+============================= */
+/* Panneau diagonal FIXE (ne se déplace pas d'un côté à l'autre) :
+   seul son contenu (texte + bouton) fait un crossfade lors du switch. */
+.overlay-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 55%;
+    height: 100%;
+    z-index: 100;
+    pointer-events: none;
+    /* laisse passer les clics vers le formulaire dans la zone "coupée" */
+}
+
+.overlay {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #0b0129 0%, #0f012b 100%);
+    color: #fff;
+    /* Le clip-path crée la coupe DIAGONALE façon "capture d'écran" */
+    clip-path: polygon(24% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.overlay-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 8% 0 30%;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    pointer-events: none;
+    /* seul le bouton à l'intérieur est cliquable */
+}
+
+.overlay-panel .btn {
+    pointer-events: auto;
+}
+
+.overlay-panel h2 {
+    font-size: 26px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+
+.overlay-panel p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 26px;
+    opacity: 0.85;
+}
+
+/* Par défaut (formulaire Login actif) : le panneau overlay invite à
+   s'inscrire → "Hello, Friend!" visible, "Welcome Back!" caché. */
+.overlay-left {
+    opacity: 0;
+    transform: translateY(15px);
+    z-index: 1;
+}
+
+.overlay-right {
+    opacity: 1;
+    transform: translateY(0);
+    z-index: 2;
+}
+
+/* ============================
+   ETAT ACTIF : bascule vers INSCRIPTION
+   (déclenché en ajoutant .right-panel-active sur #container)
+============================= */
+.container.right-panel-active .login-container {
+    opacity: 0;
+    transform: translateX(-30px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.container.right-panel-active .register-container {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 5;
+    pointer-events: auto;
+}
+
+/* Formulaire Register actif : le panneau overlay invite à se
+   reconnecter → "Welcome Back!" visible, "Hello, Friend!" caché. */
+.container.right-panel-active .overlay-left {
+    opacity: 1;
+    transform: translateY(0);
+    z-index: 2;
+}
+
+.container.right-panel-active .overlay-right {
+    opacity: 0;
+    transform: translateY(-15px);
+    z-index: 1;
+}
+
+/* ============================
+   RESPONSIVE (mobile)
+============================= */
+@media (max-width: 700px) {
+    .container {
+        min-height: 640px;
+    }
+
+    .overlay-container,
+    .overlay,
+    .overlay-panel h2,
+    .overlay-panel p,
+    .overlay-panel .btn {
+        display: none;
+        /* le panneau diagonal n'a pas de sens en colonne étroite */
+    }
+
+    .form-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .register-container {
+        display: none;
+    }
+
+    .container.right-panel-active .login-container {
+        display: none;
+    }
+
+    .container.right-panel-active .register-container {
+        display: flex;
+    }
+
+    .switch-text {
+        display: block;
+    }
+}
+
+.overlay-panel h2 {
+    color: #fff;
+}
